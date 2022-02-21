@@ -27,5 +27,60 @@ public class ParkingSpotDTO {
 	@NotBlank
 	private String responsibleName;
 
+	public String getSpotId() {
+		return spotId;
+	}
 
+	public void setSpotId(String spotId) {
+		this.spotId = spotId;
+	}
+
+	public String getTypeVehicle() {
+		return typeVehicle;
+	}
+
+	public void setTypeVehicle(String typeVehicle) {
+		this.typeVehicle = typeVehicle;
+	}
+
+	public String getRegistrationPlateVehicle() {
+		return registrationPlateVehicle;
+	}
+
+	public void setRegistrationPlateVehicle(String registrationPlateVehicle) {
+		this.registrationPlateVehicle = registrationPlateVehicle;
+	}
+
+	public String getBrandVehicle() {
+		return brandVehicle;
+	}
+
+	public void setBrandVehicle(String brandVehicle) {
+		this.brandVehicle = brandVehicle;
+	}
+
+	public String getModelVehicle() {
+		return modelVehicle;
+	}
+
+	public void setModelVehicle(String modelVehicle) {
+		this.modelVehicle = modelVehicle;
+	}
+
+	public String getColorVehicle() {
+		return colorVehicle;
+	}
+
+	public void setColorVehicle(String colorVehicle) {
+		this.colorVehicle = colorVehicle;
+	}
+
+	public String getResponsibleName() {
+		return responsibleName;
+	}
+
+	public void setResponsibleName(String responsibleName) {
+		this.responsibleName = responsibleName;
+	}
 }
+	
