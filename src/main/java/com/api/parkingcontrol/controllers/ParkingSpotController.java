@@ -54,7 +54,7 @@ public class ParkingSpotController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> getSingleSpot(@PathVariable(value = "id") UUID id){
+	public ResponseEntity<Object> getSingleParkingSpot(@PathVariable(value = "id") UUID id){
 		Optional<ParkingSpotModel> optionalParkingSpotModel = parkingSpotService.findById(id); 
 		if (optionalParkingSpotModel.isPresent()) {
 			return ResponseEntity.status(HttpStatus.OK).body(optionalParkingSpotModel.get());
