@@ -1,5 +1,7 @@
 package com.api.parkingcontrol.services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +27,9 @@ public class ParkingSpotService {
 
 	public boolean existsBySpotId(String pSpotId) {
 		return parkingSpotRepository.existsBySpotId(pSpotId);
+	}
+
+	public List<ParkingSpotModel> findAll() {
+		return parkingSpotRepository.findAll();
 	}
 }
