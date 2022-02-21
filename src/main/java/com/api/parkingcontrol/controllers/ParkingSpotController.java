@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.parkingcontrol.ParkingSpotModel;
 import com.api.parkingcontrol.dtos.ParkingSpotDTO;
+import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.services.ParkingSpotService;
 
 @RestController
@@ -29,6 +29,14 @@ public class ParkingSpotController {
 	
 	@PostMapping
 	public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDTO pParkingSpotDTO){
+		if(parkingSpotService.existsByRegistrationPlateVehicle(pParkingSpotDTO.getRegistrationPlateVehicle())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Registration Vehicle Plate is already in use.");
+		}
+		
+		if(parkingSpotService.existsBySpotId(pParkingSpotDTO.getSpotId())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use.");
+		}
+				
 		var parkingSpotModel = new ParkingSpotModel();
 		BeanUtils.copyProperties(pParkingSpotDTO, parkingSpotModel);
 		parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
