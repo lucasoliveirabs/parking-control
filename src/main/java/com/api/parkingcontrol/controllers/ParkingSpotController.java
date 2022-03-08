@@ -32,6 +32,8 @@ import com.api.parkingcontrol.services.ParkingSpotService;
 public class ParkingSpotController {
 
 	private static final String PARKING_SPOT_NOT_FOUND_MESSAGE = "Parking Spot not found.";
+	private static final String PARKING_SPOT_ALREADY_IN_USE_MESSAGE = "Conflict: Parking Spot is already in use.";
+	private static final String VEHICLE_PLATE_ALREADY_IN_USE_MESSAGE = "Conflict: Registration Vehicle Plate is already in use.";
 
 	@Autowired
 	ParkingSpotService parkingSpotService;
@@ -40,11 +42,11 @@ public class ParkingSpotController {
 	public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDTO pParkingSpotDTO) {
 		if (parkingSpotService.existsByRegistrationPlateVehicle(pParkingSpotDTO.getRegistrationPlateVehicle())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body("Conflict: Registration Vehicle Plate is already in use.");
+					.body(ParkingSpotController.VEHICLE_PLATE_ALREADY_IN_USE_MESSAGE);
 		}
 
 		if (parkingSpotService.existsBySpotId(pParkingSpotDTO.getSpotId())) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use.");
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(ParkingSpotController.PARKING_SPOT_ALREADY_IN_USE_MESSAGE);
 		}
 
 		var parkingSpotModel = new ParkingSpotModel();
@@ -85,13 +87,13 @@ public class ParkingSpotController {
 		if (optionalParkingSpotModel.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(ParkingSpotController.PARKING_SPOT_NOT_FOUND_MESSAGE);
-		}	
-		
+		}
+
 		var parkingSpotModel = new ParkingSpotModel();
 		BeanUtils.copyProperties(parkingSpotDTO, parkingSpotModel);
 		parkingSpotModel.setId(id);
 		parkingSpotModel.setRegistrationDate(optionalParkingSpotModel.get().getRegistrationDate());
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel));
 	}
 }
